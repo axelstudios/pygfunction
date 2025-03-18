@@ -10,9 +10,9 @@
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import AutoMinorLocator
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -127,7 +127,7 @@ def main():
     # Plot g-functions
     # -------------------------------------------------------------------------
 
-    ax = gfunc_Tb.visualize_g_function().axes[0]
+    ax = utilities.visualize_g_function(gfunc_Tb).axes[0]
     ax.plot(np.log(time/ts), gfunc_equal_Tf_mixed.gFunc[0, 0, :], 'C1')
     ax.plot(np.log(time/ts), gfunc_equal_Tf_mixed.gFunc[1, 1, :], 'C2')
     ax.legend([
@@ -138,10 +138,10 @@ def main():
 
     # For the mixed inlet fluid temperature condition, draw the temperatures
     # and heat extraction rates
-    gfunc_equal_Tf_mixed.visualize_temperatures()
-    gfunc_equal_Tf_mixed.visualize_temperature_profiles()
-    gfunc_equal_Tf_mixed.visualize_heat_extraction_rates()
-    gfunc_equal_Tf_mixed.visualize_heat_extraction_rate_profiles()
+    utilities.visualize_temperatures(gfunc_equal_Tf_mixed)
+    utilities.visualize_temperature_profiles(gfunc_equal_Tf_mixed)
+    utilities.visualize_heat_extraction_rates(gfunc_equal_Tf_mixed)
+    utilities.visualize_heat_extraction_rate_profiles(gfunc_equal_Tf_mixed)
 
     return
 

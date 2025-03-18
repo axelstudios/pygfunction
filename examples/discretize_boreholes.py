@@ -11,10 +11,12 @@
     can be calculated accurately using a small number of segments.
 """
 
-import pygfunction as gt
-from numpy import pi
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy import pi
+
+import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -90,7 +92,7 @@ def main():
     N_2 = 4
     borefield = gt.borefield.Borefield.rectangle_field(
         N_1, N_2, B, B, H, D, r_b)
-    gt.boreholes.visualize_field(borefield)
+    utilities.visualize_field(borefield)
     nBoreholes = len(borefield)
 
     # -------------------------------------------------------------------------
@@ -154,7 +156,7 @@ def main():
     # Plot g-functions
     # -------------------------------------------------------------------------
 
-    ax = gfunc_MIFT_uniform.visualize_g_function().axes[0]
+    ax = utilities.visualize_g_function(gfunc_MIFT_uniform).axes[0]
     ax.plot(np.log(time / ts), gfunc_UBWT_uniform.gFunc)
     ax.plot(np.log(time / ts), gfunc_MIFT_unequal.gFunc, 'o')
     ax.plot(np.log(time / ts), gfunc_UBWT_unequal.gFunc, 'o')

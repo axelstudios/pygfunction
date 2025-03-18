@@ -7,6 +7,7 @@ import numpy as np
 from scipy.constants import pi
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -101,7 +102,7 @@ def main():
           f'{R_b:.4f} m.K/W')
 
     # Visualize the borehole geometry and save the figure
-    fig_single = SingleUTube.visualize_pipes()
+    fig_single = utilities.visualize_pipes(SingleUTube)
     fig_single.savefig('single-u-tube-borehole.png')
 
     # -------------------------------------------------------------------------
@@ -153,7 +154,7 @@ def main():
           f'{R_b_parallel:.4f} m.K/W')
 
     # Visualize the borehole geometry and save the figure
-    fig_double = DoubleUTube_series.visualize_pipes()
+    fig_double = utilities.visualize_pipes(DoubleUTube_series)
     fig_double.savefig('double-u-tube-borehole.png')
 
     # -------------------------------------------------------------------------
@@ -198,7 +199,7 @@ def main():
     print(f'Coaxial tube Borehole thermal resistance: {R_b:.4f} m.K/W')
 
     # Visualize the borehole geometry and save the figure
-    fig_coaxial = Coaxial.visualize_pipes()
+    fig_coaxial = utilities.visualize_coaxial_pipes(Coaxial)
     fig_coaxial.savefig('coaxial-borehole.png')
 
 

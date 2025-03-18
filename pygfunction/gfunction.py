@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
-from time import perf_counter
 import warnings
+from time import perf_counter
 
 import numpy as np
 from scipy.cluster.hierarchy import cut_tree, dendrogram, linkage
 from scipy.constants import pi
 from scipy.interpolate import interp1d as interp1d
 
-from .boreholes import Borehole, _EquivalentBorehole, find_duplicates
+from . import utilities
 from .borefield import Borefield
+from .boreholes import Borehole, _EquivalentBorehole, find_duplicates
 from .heat_transfer import finite_line_source, finite_line_source_vectorized, \
     finite_line_source_equivalent_boreholes_vectorized, \
     finite_line_source_inclined_vectorized
 from .networks import Network, _EquivalentNetwork, network_thermal_resistance
-from . import utilities
 
 
 class gFunction(object):

@@ -7,11 +7,14 @@
     boreholes, equal for all boreholes.
 
 """
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 from time import perf_counter
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -29,7 +32,8 @@ def main():
     alpha = 1.0e-6      # Ground thermal diffusivity (m2/s)
 
     # Path to validation data
-    filePath = './data/CiBe14_uniform_temperature.txt'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, 'data', 'CiBe14_uniform_temperature.txt')
 
     # g-Function calculation options
     # A uniform discretization is used to compare results with Cimmino and
@@ -72,7 +76,7 @@ def main():
     # -------------------------------------------------------------------------
     # Load data from Cimmino and Bernier (2014)
     # -------------------------------------------------------------------------
-    data = np.loadtxt(filePath, skiprows=55)
+    data = np.loadtxt(file_path, skiprows=55)
 
     # -------------------------------------------------------------------------
     # Evaluate g-functions for all fields
@@ -90,7 +94,7 @@ def main():
         t2 = perf_counter()
         t_equivalent = t2 - t1
         # Draw g-function
-        ax = gfunc_similarities.visualize_g_function().axes[0]
+        ax = utilities.visualize_g_function(gfunc_similarities).axes[0]
         ax.plot(lntts, gfunc_equivalent.gFunc)
         # Draw reference g-function
         ax.plot(data[:,0], data[:,i+1], 'o')
@@ -102,24 +106,24 @@ def main():
 
         # For the second borefield, draw the evolution of heat extraction rates
         if i == 1:
-            fig = gfunc_similarities.visualize_heat_extraction_rates(
+            fig = utilities.visualize_heat_extraction_rates(gfunc_similarities,
                 iBoreholes=[18, 12, 14])
             fig.suptitle(f"Field of {nBoreholes} boreholes: 'similarities' "
                          f"solver")
             fig.tight_layout()
 
-            fig = gfunc_equivalent.visualize_heat_extraction_rates()
+            fig = utilities.visualize_heat_extraction_rates(gfunc_equivalent)
             fig.suptitle(f"Field of {nBoreholes} boreholes: 'equivalent' "
                          f"solver")
             fig.tight_layout()
 
-            fig = gfunc_similarities.visualize_heat_extraction_rate_profiles(
+            fig = utilities.visualize_heat_extraction_rate_profiles(gfunc_similarities,
                 iBoreholes=[18, 12, 14])
             fig.suptitle(f"Field of {nBoreholes} boreholes: 'similarities' "
                          f"solver")
             fig.tight_layout()
 
-            fig = gfunc_equivalent.visualize_heat_extraction_rate_profiles()
+            fig = utilities.visualize_heat_extraction_rate_profiles(gfunc_equivalent)
             fig.suptitle(f"Field of {nBoreholes} boreholes: 'equivalent' "
                          f"solver")
             fig.tight_layout()

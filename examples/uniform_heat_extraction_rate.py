@@ -6,12 +6,13 @@
     equal for all boreholes.
 
 """
-import matplotlib.lines as mlines
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import AutoMinorLocator
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -29,7 +30,8 @@ def main():
     alpha = 1.0e-6      # Ground thermal diffusivity (m2/s)
 
     # Path to validation data
-    filePath = './data/CiBe14_uniform_heat_extraction_rate.txt'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, 'data', 'CiBe14_uniform_heat_extraction_rate.txt')
 
     # g-Function calculation options
     # The second field is evaluated with more segments to draw the
@@ -85,7 +87,7 @@ def main():
     # -------------------------------------------------------------------------
     # Load data from Cimmino and Bernier (2014)
     # -------------------------------------------------------------------------
-    data = np.loadtxt(filePath, skiprows=55)
+    data = np.loadtxt(file_path, skiprows=55)
 
     # -------------------------------------------------------------------------
     # Evaluate g-functions for all fields
@@ -95,7 +97,7 @@ def main():
             field, alpha, time=time, boundary_condition='UHTR',
             options=options[i], method=method)
         # Draw g-function
-        ax = gfunc.visualize_g_function().axes[0]
+        ax = utilities.visualize_g_function(gfunc).axes[0]
         # Draw reference g-function
         ax.plot(data[:,0], data[:,i+1], 'bx')
         ax.legend(['pygfunction', 'Cimmino and Bernier (2014)'])
@@ -104,8 +106,8 @@ def main():
 
         # For the second borefield, draw the evolution of heat extraction rates
         if i == 1:
-            gfunc.visualize_temperatures(iBoreholes=[18, 12, 14])
-            gfunc.visualize_temperature_profiles(iBoreholes=[14])
+            utilities.visualize_temperatures(gfunc, iBoreholes=[18, 12, 14])
+            utilities.visualize_temperature_profiles(gfunc, iBoreholes=[14])
 
     return
 

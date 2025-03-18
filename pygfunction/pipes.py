@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import warnings
+
 import numpy as np
 from scipy.constants import pi
 from scipy.special import binom
-import warnings
 
 
 class _BasePipe(object):

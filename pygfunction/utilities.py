@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import warnings
+
 import numpy as np
 import numpy.polynomial.polynomial as poly
 from scipy.special import erf
-import warnings
 
 
 def cardinal_point(direction):

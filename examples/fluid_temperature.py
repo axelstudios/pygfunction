@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -164,13 +165,13 @@ def main():
     # -------------------------------------------------------------------------
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(211)
     # Axis labels
     ax1.set_xlabel(r'Time [hours]')
     ax1.set_ylabel(r'Total heat extraction rate [W]')
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
 
     # Plot heat extraction rates
     hours = np.arange(1, Nt+1) * dt / 3600.
@@ -180,7 +181,7 @@ def main():
     # Axis labels
     ax2.set_xlabel(r'Time [hours]')
     ax2.set_ylabel(r'Temperature [degC]')
-    gt.utilities._format_axes(ax2)
+    utilities.format_axes(ax2)
 
     # Plot temperatures
     ax2.plot(hours, T_b, 'k-', lw=1.5, label='Borehole wall')
@@ -221,13 +222,13 @@ def main():
                                                      cp_f)
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax3 = fig.add_subplot(131)
     # Axis labels
     ax3.set_xlabel(r'Temperature [degC]')
     ax3.set_ylabel(r'Depth from borehole head [m]')
-    gt.utilities._format_axes(ax3)
+    utilities.format_axes(ax3)
 
     # Plot temperatures
     ax3.plot(np.array([T_b[it], T_b[it]]), np.array([0., H]), 'k--')
@@ -238,7 +239,7 @@ def main():
     # Axis labels
     ax4.set_xlabel(r'Temperature [degC]')
     ax4.set_ylabel(r'Depth from borehole head [m]')
-    gt.utilities._format_axes(ax4)
+    utilities.format_axes(ax4)
 
     # Plot temperatures
     ax4.plot(T_f_double_par, z, 'b-')
@@ -248,7 +249,7 @@ def main():
     # Axis labels
     ax5.set_xlabel(r'Temperature [degC]')
     ax5.set_ylabel(r'Depth from borehole head [m]')
-    gt.utilities._format_axes(ax5)
+    utilities.format_axes(ax5)
 
     # Plot temperatures
     ax5.plot(T_f_double_ser, z, 'b-')

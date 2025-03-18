@@ -20,6 +20,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import fftconvolve
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -123,13 +124,13 @@ def main():
     # -------------------------------------------------------------------------
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(311)
     # Axis labels
     ax1.set_xlabel(r'$t$ [hours]')
     ax1.set_ylabel(r'$Q_b$ [W]')
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
     hours = np.array([(j+1)*dt/3600. for j in range(Nt)])
     ax1.plot(hours, Q_b)
 
@@ -137,7 +138,7 @@ def main():
     # Axis labels
     ax2.set_xlabel(r'$t$ [hours]')
     ax2.set_ylabel(r'$T_b$ [degC]')
-    gt.utilities._format_axes(ax2)
+    utilities.format_axes(ax2)
     for T_b_n, line, label in zip(T_b, loadAgg_lines, loadAgg_labels):
         ax2.plot(hours, T_b_n, line, label=label)
     ax2.plot(hours, T_b_exact, 'k.', label='exact')
@@ -147,7 +148,7 @@ def main():
     # Axis labels
     ax3.set_xlabel(r'$t$ [hours]')
     ax3.set_ylabel(r'Error [degC]')
-    gt.utilities._format_axes(ax3)
+    utilities.format_axes(ax3)
     for T_b_n, line, label in zip(T_b, loadAgg_lines, loadAgg_labels):
         ax3.plot(hours, T_b_n - T_b_exact, line, label=label)
     # Adjust to plot window

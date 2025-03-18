@@ -23,6 +23,7 @@ import numpy as np
 from time import perf_counter
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -82,7 +83,7 @@ def main():
     # Plot results
     # -------------------------------------------------------------------------
     # Draw g-functions
-    ax = gfunc_detailed.visualize_g_function().axes[0]
+    ax = utilities.visualize_g_function(gfunc_detailed).axes[0]
     ax.plot(lntts, gfunc_similarities.gFunc, 'bx')
     ax.plot(lntts, gfunc_equivalent.gFunc, 'ro')
     ax.legend([f'detailed (t = {t_detailed:.3f} sec)',
@@ -93,12 +94,12 @@ def main():
 
     # Draw absolute error
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
     ax = fig.add_subplot(111)
     # Axis labels
     ax.set_xlabel(r'ln$(t/t_s)$')
     ax.set_ylabel(r'Absolute error')
-    gt.utilities._format_axes(ax)
+    utilities.format_axes(ax)
     # Absolute error
     ax.plot(lntts, np.abs(gfunc_similarities.gFunc - gfunc_detailed.gFunc),
             '-', label='similarities')
@@ -112,12 +113,12 @@ def main():
 
     # Draw relative error
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
     ax = fig.add_subplot(111)
     # Axis labels
     ax.set_xlabel(r'ln$(t/t_s)$')
     ax.set_ylabel(r'Relative error')
-    gt.utilities._format_axes(ax)
+    utilities.format_axes(ax)
     # Relative error
     gFunc_ref = gfunc_detailed.gFunc  # reference g-function
     ax.plot(lntts, (gfunc_similarities.gFunc - gFunc_ref) / gFunc_ref,
@@ -155,7 +156,7 @@ def main():
     # Plot results
     # -------------------------------------------------------------------------
     # Draw g-functions
-    ax = gfunc_similarities.visualize_g_function().axes[0]
+    ax = utilities.visualize_g_function(gfunc_similarities).axes[0]
     ax.plot(lntts, gfunc_equivalent.gFunc, 'ro')
     ax.legend([f'similarities (t = {t_similarities:.3f} sec)',
                f'equivalent (t = {t_equivalent:.3f} sec)'])
@@ -164,12 +165,12 @@ def main():
 
     # Draw absolute error
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
     ax = fig.add_subplot(111)
     # Axis labels
     ax.set_xlabel(r'ln$(t/t_s)$')
     ax.set_ylabel(r'Absolute error')
-    gt.utilities._format_axes(ax)
+    utilities.format_axes(ax)
     # Absolute error
     ax.plot(lntts, np.abs(gfunc_equivalent.gFunc - gfunc_similarities.gFunc),
             label='equivalent')
@@ -181,12 +182,12 @@ def main():
 
     # Draw relative error
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
     ax = fig.add_subplot(111)
     # Axis labels
     ax.set_xlabel(r'ln$(t/t_s)$')
     ax.set_ylabel(r'Relative error')
-    gt.utilities._format_axes(ax)
+    utilities.format_axes(ax)
     # Relative error
     ax.plot(lntts, (gfunc_equivalent.gFunc - gfunc_similarities.gFunc) / gfunc_similarities.gFunc,
             label='equivalent')

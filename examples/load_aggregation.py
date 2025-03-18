@@ -13,6 +13,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import fftconvolve
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -96,13 +97,13 @@ def main():
     # -------------------------------------------------------------------------
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(311)
     # Axis labels
     ax1.set_xlabel(r'$t$ [hours]')
     ax1.set_ylabel(r'$Q_b$ [W]')
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
 
     hours = np.arange(1, Nt+1) * dt / 3600.
     ax1.plot(hours, Q_b)
@@ -111,7 +112,7 @@ def main():
     # Axis labels
     ax2.set_xlabel(r'$t$ [hours]')
     ax2.set_ylabel(r'$T_b$ [degC]')
-    gt.utilities._format_axes(ax2)
+    utilities.format_axes(ax2)
 
     ax2.plot(hours, T_b)
     ax2.plot(hours, T_b_exact, 'k.')
@@ -120,7 +121,7 @@ def main():
     # Axis labels
     ax3.set_xlabel(r'$t$ [hours]')
     ax3.set_ylabel(r'Error [degC]')
-    gt.utilities._format_axes(ax3)
+    utilities.format_axes(ax3)
 
     ax3.plot(hours, T_b - T_b_exact)
 

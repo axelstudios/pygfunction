@@ -10,11 +10,13 @@
     against the results of Claesson and Hellstrom (2011).
 
 """
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import AutoMinorLocator
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -51,7 +53,8 @@ def main():
     T_f = np.array([1., 1.])
 
     # Path to validation data
-    filePath = './data/ClaHel11_multipole_temperature.txt'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, 'data', 'ClaHel11_multipole_temperature.txt')
 
     # Thermal resistances for J=3
     R_Claesson = 0.01*np.array([25.592, 1.561, 25.311])
@@ -91,10 +94,10 @@ def main():
                                                x_T=x, y_T=y)
 
     # Load validation data
-    data = np.loadtxt(filePath, skiprows=1)
+    data = np.loadtxt(file_path, skiprows=1)
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(111)
     # Axis labels
@@ -105,7 +108,7 @@ def main():
     ax1.set_ylim([-0.2, 1.2])
     # Show grid
     ax1.grid()
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
 
     ax1.plot(x, T, label='pygfunction')
     ax1.plot(data[:,0], data[:,1], 'ko',
@@ -132,7 +135,7 @@ def main():
                                                y_T=Y.flatten())
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(111)
     # Axis labels
@@ -141,7 +144,7 @@ def main():
     # Axis limits
     plt.axis([-0.1, 0.1, -0.1, 0.1])
     plt.gca().set_aspect('equal', adjustable='box')
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
 
     # Borehole wall outline
     borewall = plt.Circle((0., 0.), radius=r_b,

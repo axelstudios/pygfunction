@@ -8,9 +8,9 @@
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import AutoMinorLocator
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -110,7 +110,7 @@ def main():
     # -------------------------------------------------------------------------
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(111)
     # Axis labels
@@ -120,7 +120,7 @@ def main():
     ax1.set_xlim([0., 1.])
     ax1.set_ylim([0., 1.])
 
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
 
     # Bore field thermal resistances
     ax1.plot(m_flow_network, R[0,:], '-', label='1 borehole')

@@ -14,9 +14,10 @@
     extraction boreholes". Ph.D. Thesis, University of Lund, Lund, Sweden.
 """
 
-import pygfunction as gt
 import numpy as np
-import matplotlib.pyplot as plt
+
+import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -75,7 +76,7 @@ def main():
     borefield1 = gt.borefield.Borefield.from_boreholes(boreholes)
 
     # Visualize the borehole field
-    fig1 = gt.boreholes.visualize_field(borefield1)
+    fig1 = utilities.visualize_field(borefield1)
 
     """
     Bore field #2
@@ -92,7 +93,7 @@ def main():
         N, R, H, D, r_b, tilt=tilt)
 
     # Visualize the borehole field
-    fig2 = gt.boreholes.visualize_field(borefield2)
+    fig2 = utilities.visualize_field(borefield2)
 
     # -------------------------------------------------------------------------
     # Evaluate g-functions for all fields
@@ -100,13 +101,13 @@ def main():
     # Bore field #1
     gfunc1 = gt.gfunction.gFunction(
         borefield1, alpha, time=time, options=options, method='similarities')
-    fig3 = gfunc1.visualize_g_function()
+    fig3 = utilities.visualize_g_function(gfunc1)
     fig3.suptitle('"Optimal" field of 8 boreholes')
     fig3.tight_layout()
     # Bore field #2
     gfunc2 = gt.gfunction.gFunction(
         borefield2, alpha, time=time, options=options, method='similarities')
-    fig4 = gfunc2.visualize_g_function()
+    fig4 = utilities.visualize_g_function(gfunc2)
     fig4.suptitle(f'Field of {N} boreholes in a circle')
     fig4.tight_layout()
 

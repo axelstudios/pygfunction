@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -187,13 +188,13 @@ def main():
     # -------------------------------------------------------------------------
 
     # Configure figure and axes
-    fig = gt.utilities._initialize_figure()
+    fig = utilities.initialize_figure()
 
     ax1 = fig.add_subplot(221)
     # Axis labels
     ax1.set_xlabel(r'Time [hours]')
     ax1.set_ylabel(r'Total heat extraction rate [W/m]')
-    gt.utilities._format_axes(ax1)
+    utilities.format_axes(ax1)
 
     # Plot heat extraction rates
     hours = np.arange(1, Nt+1) * dt / 3600.
@@ -203,7 +204,7 @@ def main():
     # Axis labels
     ax2.set_xlabel(r'Time [hours]')
     ax2.set_ylabel(r'Fluid mass flow rate [kg/s]')
-    gt.utilities._format_axes(ax2)
+    utilities.format_axes(ax2)
 
     # Plot temperatures
     ax2.plot(hours, m_flow)
@@ -212,7 +213,7 @@ def main():
     # Axis labels
     ax3.set_xlabel(r'Time [hours]')
     ax3.set_ylabel(r'Temperature [degC]')
-    gt.utilities._format_axes(ax3)
+    utilities.format_axes(ax3)
 
     # Plot temperatures
     ax3.plot(hours, T_b, label='Borehole wall')

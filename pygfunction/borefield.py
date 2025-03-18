@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from typing import Union, List, Dict, Tuple
-from typing_extensions import Self     # for compatibility with Python <= 3.10
 
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import Self  # for compatibility with Python <= 3.10
 
 from .boreholes import Borehole
 

@@ -5,6 +5,7 @@
 import matplotlib.pyplot as plt
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -62,7 +63,7 @@ def main():
     for borefield in [
             rectangle_field, staggered_rectangle_field, dense_rectangle_field,
             box_shaped_field, U_shaped_field, L_shaped_field, circle_field]:
-        borefield.visualize_field()
+        utilities.visualize_field(borefield)
         plt.show()
 
     return

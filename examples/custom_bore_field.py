@@ -5,6 +5,7 @@
 import numpy as np
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -42,7 +43,7 @@ def main():
     # Draw bore field
     # -------------------------------------------------------------------------
 
-    borefield.visualize_field()
+    utilities.visualize_field(borefield)
 
     return
 

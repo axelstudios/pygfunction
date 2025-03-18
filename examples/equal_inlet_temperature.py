@@ -9,9 +9,9 @@
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import AutoMinorLocator
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -122,7 +122,7 @@ def main():
     # Plot g-functions
     # -------------------------------------------------------------------------
 
-    ax = gfunc_uniform_Q.visualize_g_function().axes[0]
+    ax = utilities.visualize_g_function(gfunc_uniform_Q).axes[0]
     ax.plot(np.log(time / ts), gfunc_uniform_T.gFunc, 'k--')
     ax.plot(np.log(time / ts), gfunc_equal_Tf_in.gFunc, 'r-.')
     ax.legend(['Uniform heat extraction rate',

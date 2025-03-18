@@ -6,10 +6,10 @@
     number of segments.
 """
 import matplotlib.pyplot as plt
-from matplotlib.ticker import AutoMinorLocator
 import numpy as np
 
 import pygfunction as gt
+from utilities import utilities
 
 
 def main():
@@ -42,7 +42,7 @@ def main():
     N_2 = 4
     borefield = gt.borefield.Borefield.rectangle_field(
         N_1, N_2, B, B, H, D, r_b)
-    gt.boreholes.visualize_field(borefield)
+    utilities.visualize_field(borefield)
 
     # -------------------------------------------------------------------------
     # Evaluate g-functions with different segment options
@@ -101,7 +101,7 @@ def main():
     # Plot g-functions
     # -------------------------------------------------------------------------
 
-    ax = gfunc_equal.visualize_g_function().axes[0]
+    ax = utilities.visualize_g_function(gfunc_equal).axes[0]
     ax.plot(np.log(time/ts), gfunc_unequal.gFunc, 'r-.')
     ax.plot(np.log(time/ts), g_func_predefined.gFunc, 'k-.')
     ax.legend(['Equal number of segments',
@@ -110,19 +110,19 @@ def main():
     plt.tight_layout()
 
     # Heat extraction rate profiles
-    fig = gfunc_unequal.visualize_heat_extraction_rates(
+    fig = utilities.visualize_heat_extraction_rates(gfunc_unequal,
         iBoreholes=[18, 12, 14])
     fig.suptitle('Heat extraction rates (unequal number of segments)')
     fig.tight_layout()
-    fig = g_func_predefined.visualize_heat_extraction_rates(
+    fig = utilities.visualize_heat_extraction_rates(g_func_predefined,
         iBoreholes=[18, 12, 14])
     fig.suptitle('Heat extraction rates (unequal segment lengths)')
     fig.tight_layout()
-    fig = gfunc_unequal.visualize_heat_extraction_rate_profiles(
+    fig = utilities.visualize_heat_extraction_rate_profiles(gfunc_unequal,
         iBoreholes=[18, 12, 14])
     fig.suptitle('Heat extraction rate profiles (unequal number of segments)')
     fig.tight_layout()
-    fig = g_func_predefined.visualize_heat_extraction_rate_profiles(
+    fig = utilities.visualize_heat_extraction_rate_profiles(g_func_predefined,
         iBoreholes=[18, 12, 14])
     fig.suptitle('Heat extraction rate profiles (unequal segment lengths)')
     fig.tight_layout()
