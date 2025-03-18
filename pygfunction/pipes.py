@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.constants import pi
 from scipy.special import binom
 import warnings
-
-from .utilities import _initialize_figure, _format_axes
 
 
 class _BasePipe(object):
@@ -735,73 +732,6 @@ class _BasePipe(object):
             'update_thermal_resistances class method not implemented, '
             'this method should update the array of delta-circuit thermal '
             'resistances.')
-        return
-
-    def visualize_pipes(self):
-        """
-        Plot the cross-section view of the borehole.
-
-        Returns
-        -------
-        fig : figure
-            Figure object (matplotlib).
-
-        """
-        # Configure figure and axes
-        fig = _initialize_figure()
-        ax = fig.add_subplot(111)
-        ax.set_xlabel(r'$x$ [m]')
-        ax.set_ylabel(r'$y$ [m]')
-        ax.axis('equal')
-        _format_axes(ax)
-
-        # Color cycle
-        prop_cycle = plt.rcParams['axes.prop_cycle']
-        colors = prop_cycle.by_key()['color']
-        lw = plt.rcParams['lines.linewidth']
-
-        # Borehole wall outline
-        ax.plot([-self.b.r_b, 0., self.b.r_b, 0.],
-                [0., self.b.r_b, 0., -self.b.r_b],
-                'k.', alpha=0.)
-        borewall = plt.Circle(
-            (0., 0.), radius=self.b.r_b, fill=False,
-            color='k', linestyle='--', lw=lw)
-        ax.add_patch(borewall)
-
-        # Pipes
-        for i in range(self.nPipes):
-            # Coordinates of pipes
-            (x_in, y_in) = self.pos[i]
-            (x_out, y_out) = self.pos[i + self.nPipes]
-
-            # Pipe outline (inlet)
-            pipe_in_in = plt.Circle(
-                (x_in, y_in), radius=self.r_in,
-                fill=False, linestyle='-', color=colors[i], lw=lw)
-            pipe_in_out = plt.Circle(
-                (x_in, y_in), radius=self.r_out,
-                fill=False, linestyle='-', color=colors[i], lw=lw)
-            ax.text(x_in, y_in, i, ha="center", va="center")
-
-            # Pipe outline (outlet)
-            pipe_out_in = plt.Circle(
-                (x_out, y_out), radius=self.r_in,
-                fill=False, linestyle='-', color=colors[i], lw=lw)
-            pipe_out_out = plt.Circle(
-                (x_out, y_out), radius=self.r_out,
-                fill=False, linestyle='-', color=colors[i], lw=lw)
-            ax.text(x_out, y_out, i + self.nPipes,
-                    ha="center", va="center")
-
-            ax.add_patch(pipe_in_in)
-            ax.add_patch(pipe_in_out)
-            ax.add_patch(pipe_out_in)
-            ax.add_patch(pipe_out_out)
-
-        plt.tight_layout()
-
-        return fig
 
     def _initialize_stored_coefficients(self):
         nMethods = 8    # Number of class methods
@@ -2634,79 +2564,6 @@ class Coaxial(SingleUTube):
         # Initialize stored_coefficients
         self._initialize_stored_coefficients()
         return
-
-    def visualize_pipes(self):
-        """
-        Plot the cross-section view of the borehole.
-
-        Returns
-        -------
-        fig : figure
-            Figure object (matplotlib).
-
-        """
-        # Configure figure and axes
-        fig = _initialize_figure()
-        ax = fig.add_subplot(111)
-        ax.set_xlabel(r'$x$ [m]')
-        ax.set_ylabel(r'$y$ [m]')
-        ax.axis('equal')
-        _format_axes(ax)
-
-        # Color cycle
-        prop_cycle = plt.rcParams['axes.prop_cycle']
-        colors = prop_cycle.by_key()['color']
-        lw = plt.rcParams['lines.linewidth']
-
-        # Borehole wall outline
-        ax.plot([-self.b.r_b, 0., self.b.r_b, 0.],
-                [0., self.b.r_b, 0., -self.b.r_b],
-                'k.', alpha=0.)
-        borewall = plt.Circle(
-            (0., 0.), radius=self.b.r_b, fill=False,
-            color='k', linestyle='--', lw=lw)
-        ax.add_patch(borewall)
-
-        # Pipes
-        for i, (pos, color) in enumerate(zip(self.pos, colors)):
-            # Coordinates of pipes
-            (x_in, y_in) = pos
-            (x_out, y_out) = pos
-
-            # Pipe outline (inlet)
-            pipe_in_in = plt.Circle(
-                (x_in, y_in), radius=self.r_in[0],
-                fill=False, linestyle='-', color=color, lw=lw)
-            pipe_in_out = plt.Circle(
-                (x_in, y_in), radius=self.r_out[0],
-                fill=False, linestyle='-', color=color, lw=lw)
-            if self._iInner == 0:
-                ax.text(x_in, y_in, i, ha="center", va="center")
-            else:
-                ax.text(x_in + 0.5 * (self.r_out[0] + self.r_in[1]), y_in, i,
-                        ha="center", va="center")
-
-            # Pipe outline (outlet)
-            pipe_out_in = plt.Circle(
-                (x_out, y_out), radius=self.r_in[1],
-                fill=False, linestyle='-', color=color, lw=lw)
-            pipe_out_out = plt.Circle(
-                (x_out, y_out), radius=self.r_out[1],
-                fill=False, linestyle='-', color=color, lw=lw)
-            if self._iInner == 1:
-                ax.text(x_out, y_out, i + self.nPipes, ha="center", va="center")
-            else:
-                ax.text(x_out + 0.5 * (self.r_out[0] + self.r_in[1]), y_out,
-                        i + self.nPipes, ha="center", va="center")
-
-            ax.add_patch(pipe_in_in)
-            ax.add_patch(pipe_in_out)
-            ax.add_patch(pipe_out_in)
-            ax.add_patch(pipe_out_out)
-
-        plt.tight_layout()
-
-        return fig
 
     def _check_geometry(self):
         """ Verifies the inputs to the pipe object and raises an error if

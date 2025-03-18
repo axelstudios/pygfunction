@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 import warnings
 
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.distance import pdist
-
-from .utilities import _initialize_figure, _format_axes, _format_axes_3d
 
 
 class Borehole(object):
@@ -1351,111 +1348,3 @@ def field_from_file(filename):
             Borehole(H, D, r_b, x=x, y=y, tilt=tilt, orientation=orientation))
 
     return borefield
-
-
-def visualize_field(
-        borefield, viewTop=True, view3D=True, labels=True, showTilt=True):
-    """
-    Plot the top view and 3D view of borehole positions.
-
-    Parameters
-    ----------
-    borefield : list
-        List of boreholes in the bore field.
-    viewTop : bool, optional
-        Set to True to plot top view.
-        Default is True
-    view3D : bool, optional
-        Set to True to plot 3D view.
-        Default is True
-    labels : bool, optional
-        Set to True to annotate borehole indices to top view plot.
-        Default is True
-    showTilt : bool, optional
-        Set to True to show borehole inclination on top view plot.
-        Default is True
-
-    Returns
-    -------
-    fig : figure
-        Figure object (matplotlib).
-
-    """
-    # This function is deprecated as of v2.3. It will be removed in v3.0.
-    warnings.warn("`pygfunction.boreholes.visualize_field` is "
-                  "deprecated as of v2.3. It will be removed in v3.0. "
-                  "Use the `pygfunction.borefield.Borefield` class instead.",
-                  DeprecationWarning)
-
-    # Configure figure and axes
-    fig = _initialize_figure()
-    if viewTop and view3D:
-        ax1 = fig.add_subplot(121)
-        ax2 = fig.add_subplot(122, projection='3d')
-    elif viewTop:
-        ax1 = fig.add_subplot(111)
-    elif view3D:
-        ax2 = fig.add_subplot(111, projection='3d')
-    if viewTop:
-        ax1.set_xlabel(r'$x$ [m]')
-        ax1.set_ylabel(r'$y$ [m]')
-        ax1.axis('equal')
-        _format_axes(ax1)
-    if view3D:
-        ax2.set_xlabel(r'$x$ [m]')
-        ax2.set_ylabel(r'$y$ [m]')
-        ax2.set_zlabel(r'$z$ [m]')
-        _format_axes_3d(ax2)
-        ax2.invert_zaxis()
-
-    # -------------------------------------------------------------------------
-    # Top view
-    # -------------------------------------------------------------------------
-    if viewTop:
-        i = 0   # Initialize borehole index
-        for borehole in borefield:
-            # Extract borehole parameters
-            (x, y) = borehole.position()
-            H = borehole.H
-            tilt = borehole.tilt
-            orientation = borehole.orientation
-            # Add current borehole to the figure
-            if showTilt:
-                ax1.plot(
-                    [x, x + H * np.sin(tilt) * np.cos(orientation)],
-                    [y, y + H * np.sin(tilt) * np.sin(orientation)],
-                    'k--')
-            ax1.plot(x, y, 'ko')
-            if labels: ax1.text(x, y,
-                                f' {i}',
-                                ha="left", va="bottom")
-            i += 1  # Increment borehole index
-
-    # -------------------------------------------------------------------------
-    # 3D view
-    # -------------------------------------------------------------------------
-    if view3D:
-        for borehole in borefield:
-            # Position of head of borehole
-            (x, y) = borehole.position()
-            # Position of bottom of borehole
-            x_H = x + borehole.H*np.sin(borehole.tilt)*np.cos(borehole.orientation)
-            y_H = y + borehole.H*np.sin(borehole.tilt)*np.sin(borehole.orientation)
-            z_H = borehole.D + borehole.H*np.cos(borehole.tilt)
-            # Add current borehole to the figure
-            ax2.plot(np.atleast_1d(x),
-                     np.atleast_1d(y),
-                     np.atleast_1d(borehole.D),
-                     'ko')
-            ax2.plot(np.array([x, x_H]),
-                     np.array([y, y_H]),
-                     np.array([borehole.D, z_H]),
-                     'k-')
-
-
-    if viewTop and view3D:
-        plt.tight_layout(rect=[0, 0.0, 0.90, 1.0])
-    else:
-        plt.tight_layout()
-
-    return fig
